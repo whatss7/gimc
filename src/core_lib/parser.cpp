@@ -46,7 +46,7 @@ ParseResult execute_command(string str, bool first_command) {
 	    "probabilistic/prob/p: Toggle probabilistic mode.\n"
 	    "                      Slow, outputs expectation (not materials "
 	    "left).\n"
-	    "                  pc: Probabilistic mode simulation count.\n"
+	    "          pc (count): Probabilistic mode simulation count.\n"
 	    "   pto (level) (num): Toggle p-to mode. Calculate prob. for goal.\n"
 	    "                      Based on probabilistic mode.\n"
 	    "      help/h/(empty): Display this message.\n";
@@ -158,9 +158,12 @@ ParseResult execute_command(string str, bool first_command) {
 		                                    " " + params[1]);
 	}
 	if (inst == "pc") {
-		if (params.size() != 1)
+		if (params.size() > 1)
 			return ParseResult(action_none,
-			                   incorrect_argc(inst, params.size(), 1, 1));
+			                   incorrect_argc(inst, params.size(), 0, 1));
+		if (params.size() == 0)
+			return ParseResult(action_skip, "Current PC is " +
+			                                    to_string(config.prob_repeat));
 		if (!try_stoi(params[0], config.prob_repeat))
 			return ParseResult(action_none, "Invalid number " + params[0]);
 		return ParseResult(action_skip, "PC changed to " + params[0]);
