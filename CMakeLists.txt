@@ -10,12 +10,12 @@ add_library(core_lib STATIC
 )
 
 target_include_directories(core_lib
-    PUBLIC
-        ${PROJECT_SOURCE_DIR}/include
+	PUBLIC
+		${PROJECT_SOURCE_DIR}/include
 )
 
 add_executable(gimc
-    src/gimc.cpp
+	src/gimc.cpp
 )
 
 target_link_libraries(gimc
